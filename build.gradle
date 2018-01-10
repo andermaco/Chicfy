@@ -1,0 +1,69 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    
+    repositories {
+        google()
+        jcenter()
+        maven {
+            url "https://maven.google.com"
+        }
+
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath 'io.realm:realm-gradle-plugin:3.7.2'
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+ext {
+    // Sdk and tools
+    compileSdkVersion = 26
+    buildToolsVersion = '26.0.2'
+    minSdkVersion = 16
+    targetSdkVersion = 26
+
+    // App version
+    versionCode = 1
+    versionName = '1.0.1'
+
+    // App dependencies
+    supportLibraryVersion = '26.0.2'
+    butterknifeVersion = '8.7.0'
+    dagger2Version = '2.8'
+    constraintLayoutVersion = '1.0.2'
+    retrofitVersion = '2.3.0'
+    retrofitScalarVersion = '2.1.0'
+    gsonVersion = '2.8.2'
+    rxJavaVersion  = '2.1.0'
+    rxAndroidVersion = '2.0.1'
+    glassfishVersion = '10.0-b28'
+    glideVersion = '4.1.1'
+    glideTransformationsVersion = '3.0.1'
+    jodaVersion = '2.9.9.1'
+    fakerVersion = '1.4.3'
+    retrofit2rxjava2adapterVersion = '1.0.0'
+    loggingInterceptorVersion = '3.6.0'
+    supportAnnotationsVersion = '23.0.1'
+
+    //Test dependencies
+    junitVersion = '4.12'
+    espressoVersion = '3.0.1'
+    mockitoVersion = '2.7.1'
+    testVersion = '1.0.1'
+
+
+}

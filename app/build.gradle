@@ -1,0 +1,124 @@
+apply plugin: 'com.android.application'
+apply plugin: 'realm-android'
+
+android {
+    compileSdkVersion 26
+    defaultConfig {
+        applicationId "com.andermaco.test"
+        minSdkVersion 15
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "int", "LIMIT", "100"
+        buildConfigField "String", "BASEURL", "\"http://api.randomuser.me/\""
+        buildConfigField "int", "CACHETIME", "432000" // 5days
+
+        multiDexEnabled true
+    }
+    compileOptions {
+      sourceCompatibility JavaVersion.VERSION_1_8
+      targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/rxjava.properties'
+    }
+}
+
+realm {
+  syncEnabled = true
+}
+
+// Used twine (https://github.com/scelis/twine) to generate string resources
+task generateLocations {
+    def os = System.getProperty("os.name").toLowerCase()
+    String script = ''
+    if (os.contains("mac os")) {
+        // Mac
+        script = 'if hash twine 2>/dev/null; ' +
+                'then generate-all-localization-files ../i18n/strings_client.txt ./src/main/res --tag android; ' +
+                ' fi'
+    } else {
+        script = 'twine generate-all-localization-files ../i18n/strings_client.txt ./src/main/res --tags android'
+    }
+    exec {
+        executable 'sh'
+        args '-c', script
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "com.android.support:appcompat-v7:$rootProject.ext.supportLibraryVersion"
+    implementation "com.android.support:design:$rootProject.ext.supportLibraryVersion"
+    implementation "com.android.support.constraint:constraint-layout:$rootProject.ext.constraintLayoutVersion"
+    implementation "com.android.support:support-v4:$rootProject.ext.supportLibraryVersion"
+    implementation 'com.android.support:support-annotations:22.2.0'
+
+
+    // Test
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation "com.android.support.test:runner:$rootProject.ext.testVersion"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:$rootProject.ext.espressoVersion"
+    androidTestImplementation "com.android.support:support-annotations:$rootProject.ext.supportAnnotationsVersion"
+    androidTestImplementation "com.android.support.test:rules:$rootProject.ext.testVersion"
+    androidTestImplementation "com.android.support.test.espresso:espresso-contrib:$rootProject.ext.espressoVersion"
+
+    // Local unit tests
+    testImplementation "junit:junit:$rootProject.ext.junitVersion"
+    testImplementation "org.mockito:mockito-core:$rootProject.mockitoVersion"
+    testAnnotationProcessor "com.google.dagger:dagger-compiler:$rootProject.dagger2Version"
+
+    // Retrofit & OkHttp
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.ext.retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$rootProject.ext.retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-scalars:$rootProject.ext.retrofitScalarVersion"
+    implementation 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
+    implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.ext.loggingInterceptorVersion"
+    implementation "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:$rootProject.ext.retrofit2rxjava2adapterVersion"
+    implementation "com.squareup.retrofit2:adapter-rxjava:$rootProject.ext.retrofitVersion"
+
+    // Gson
+    implementation "com.google.code.gson:gson:$rootProject.ext.gsonVersion"
+
+    // RxJava & RxAndroid
+    implementation "io.reactivex.rxjava2:rxandroid:$rootProject.ext.rxAndroidVersion"
+    implementation "io.reactivex.rxjava2:rxjava:$rootProject.ext.rxJavaVersion"
+
+    // Butterknife
+    implementation "com.jakewharton:butterknife:$rootProject.ext.butterknifeVersion"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.ext.butterknifeVersion"
+
+    // Dagger 2
+    annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.ext.dagger2Version"
+    implementation "com.google.dagger:dagger:$rootProject.ext.dagger2Version"
+
+    // Glassfish
+    provided "org.glassfish:javax.annotation:$rootProject.ext.glassfishVersion"
+
+    // Glide
+    implementation "com.github.bumptech.glide:glide:$rootProject.ext.glideVersion"
+    annotationProcessor "com.github.bumptech.glide:compiler:$rootProject.ext.glideVersion"
+    implementation "jp.wasabeef:glide-transformations:$rootProject.ext.glideTransformationsVersion"
+
+    // Guava
+    implementation 'com.google.guava:guava:23.6-android'
+
+    // Joda time for test
+    implementation "net.danlew:android.joda:$rootProject.ext.jodaVersion"
+
+    // Faker data
+    implementation "com.github.thiagokimo:faker:$rootProject.ext.fakerVersion"
+
+
+}

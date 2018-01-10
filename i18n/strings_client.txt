@@ -1,0 +1,37 @@
+[[ COMMON ]]
+	[app_name]
+		en = Chicfy test
+		es = Test Chicfy
+		tags = android
+
+[[ OFFER_LIST ]]
+	[user_list_title_activity]
+		en = Users
+		es = Usuarios
+		tags = android
+	[user_list_no_users_found]
+		en = No users were found based on the search criteria.
+		es = No se han encontrado usuarios.
+		tags = android
+	[user_action_settings]
+		en = Settigns
+		es = Configuración
+		tags = android
+
+[[ OFFER ]]
+	[user_title_activity]
+		en = User
+		es = Usuario
+		tags = android
+
+[[ CANCEL ]]
+	[dialog_cancel_button]
+		en = Cancel
+		es = Cancelar
+		tags = android
+	[dialog_ok_button]
+		en = Ok
+		es = Aceptar
+		tags = android
+
+
